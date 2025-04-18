@@ -1,4 +1,4 @@
-name: imagegenerator
+version: "3.8"
 services:
   imagegen:
     restart: unless-stopped

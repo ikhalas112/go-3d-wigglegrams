@@ -69,7 +69,12 @@ func CreateVideo(imageInput *image.Image, points *[]util.Vec2) (string, error) {
 	fmt.Println("กำลังสร้างโฟลเดอร์ชั่วคราว...")
 	timestamp := time.Now().UnixMilli()
 	frameDir := fmt.Sprintf("temp/frames_%d", timestamp)
-	os.MkdirAll(frameDir, os.ModePerm)
+	if err := os.MkdirAll("temp", os.ModePerm); err != nil {
+		return "", fmt.Errorf("failed to create temp directory: %w", err)
+	}
+	if err := os.MkdirAll(frameDir, os.ModePerm); err != nil {
+		return "", fmt.Errorf("failed to create frames directory: %w", err)
+	}
 	fmt.Printf("สร้างโฟลเดอร์ %s เสร็จสิ้น\n", frameDir)
 
 	fmt.Println("กำลังบันทึกเฟรมพื้นฐานเป็นไฟล์ PNG...")

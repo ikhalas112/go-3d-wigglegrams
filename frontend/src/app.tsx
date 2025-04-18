@@ -145,7 +145,7 @@ export default function App() {
       formData?.append(item, JSON.stringify(send_data[item]));
     }
     try {
-      const res = await fetch("http://localhost:9999/api/video", {
+      const res = await fetch("http://localhost/api/video", {
         method: "POST",
         body: formData,
       });

@@ -125,7 +125,7 @@ export function Canvas(props: CanvasProps) {
     <>
       {canvas_ref.current && props.image != "" && (
         <div className="flex flex-col items-center justify-center pb-3">
-          Preview Zoom Factor: <b>{zoomFactor}</b>
+          ระดับการซูม: <b>{zoomFactor}</b>
           <Slider
             defaultValue={[2]}
             max={15}
@@ -179,7 +179,7 @@ export function Canvas(props: CanvasProps) {
             return (
               <div className="pb-2 text-center text-sm" key={index}>
                 {value.x == -1 || value.y == -1 ? (
-                  <div className="text-red-900">not selected</div>
+                  <div className="text-red-900">ไม่ได้เลือก</div>
                 ) : (
                   <div className="text-green-900">
                     ({value.x}, {value.y})

@@ -1,15 +1,6 @@
 import { Canvas } from "@/components/canvas";
 import LoadingSpinner from "@/components/loading-spinner";
-// import {
-//   AlertDialog,
-//   AlertDialogContent,
-//   AlertDialogDescription,
-//   AlertDialogFooter,
-//   AlertDialogHeader,
-//   AlertDialogTitle,
-// } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Dropzone from "@/components/dropzone";
 
@@ -29,7 +20,6 @@ const file_upload = (e: ChangeEvent<HTMLInputElement>) => {
   const input: HTMLInputElement = e.target;
   console.log(input.files);
   if (!input.files) {
-    // ERR
     return {
       form_data,
       img_size,
@@ -38,7 +28,6 @@ const file_upload = (e: ChangeEvent<HTMLInputElement>) => {
   }
   const file: File = input.files[0];
   if (!file) {
-    // ERR
     return {
       form_data,
       img_size,
@@ -71,8 +60,6 @@ export default function App() {
     { x: -1, y: -1 },
   ]);
   const [formData, setFormData] = useState<FormData>();
-  // const [error, setError] = useState<boolean>(false);
-
   const [resultUrl, setResultUrl] = useState<string>("");
   const [loadingResultUrl, setLoadingResultUrl] = useState<boolean | null>(
     null
@@ -140,9 +127,10 @@ export default function App() {
       points: img_points,
     };
     for (const item in send_data) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      formData?.append(item, JSON.stringify(send_data[item]));
+      formData?.append(
+        item,
+        JSON.stringify(send_data[item as keyof typeof send_data])
+      );
     }
     try {
       const res = await fetch("http://localhost/api/video", {
@@ -159,8 +147,6 @@ export default function App() {
       setResultUrl(url);
     } catch (error) {
       console.log(error);
-      // setLoadingResultUrl(false);
-      // setError(true);
     } finally {
       setLoadingResultUrl(false);
     }
@@ -175,8 +161,13 @@ export default function App() {
 
   if (loadingResultUrl != null && loadingResultUrl) {
     return (
-      <div className="flex h-dvh w-dvw flex-col items-center justify-center">
-        <p className="p-5 text-center">Generating video...</p>
+      <div
+        className="flex h-dvh w-dvw flex-col items-center justify-center"
+        style={{ backgroundColor: "#E1DFE2", color: "#2E2A4B" }}
+      >
+        <p className="p-5 text-center text-xl font-semibold">
+          กำลังสร้างวิดีโอ...
+        </p>
         <LoadingSpinner />
       </div>
     );
@@ -184,22 +175,37 @@ export default function App() {
 
   if (resultUrl != "") {
     return (
-      <div className="flex w-dvw flex-col items-center justify-center gap-4 py-8">
-        <video id="videoPreview" width={360} controls src={resultUrl}></video>
+      <div
+        className="flex w-dvw flex-col items-center justify-center gap-6 py-12"
+        style={{ backgroundColor: "#E1DFE2", color: "#2E2A4B" }}
+      >
+        <video
+          id="videoPreview"
+          width={360}
+          controls
+          src={resultUrl}
+          className="rounded-lg shadow-lg"
+        ></video>
 
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-4">
           <Button
             variant="outline"
             onClick={() => window.location.reload()}
-            className="w-[120px]"
+            className="w-[140px] rounded-full font-medium transition-all hover:scale-105"
+            style={{
+              backgroundColor: "#9A8B9C",
+              color: "#FFFFFF",
+              border: "none",
+            }}
           >
-            RESTART
+            เริ่มใหม่
           </Button>
           <Button
             onClick={() => downloadVideo(resultUrl)}
-            className="w-[120px]"
+            className="w-[140px] rounded-full font-medium transition-all hover:scale-105"
+            style={{ backgroundColor: "#9A8B9C", color: "#FFFFFF" }}
           >
-            DOWNLOAD
+            ดาวน์โหลด
           </Button>
         </div>
       </div>
@@ -208,24 +214,30 @@ export default function App() {
 
   if (!loading && previewImageSrc == "") {
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div
+        className="w-screen min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "#E1DFE2", color: "#2E2A4B" }}
+      >
         <Dropzone onFileChange={setEvent} />
       </div>
     );
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start">
+    <main
+      className="flex min-h-screen flex-col items-center justify-start"
+      style={{ backgroundColor: "#E1DFE2", color: "#2E2A4B" }}
+    >
       {loading && (
         <div className="flex h-dvh w-dvw flex-col items-center justify-center">
-          <p className="p-5">Loading Image</p>
+          <p className="p-5 text-xl font-medium">กำลังโหลดภาพ</p>
           <LoadingSpinner />
         </div>
       )}
       <div className="relative flex flex-col items-center justify-center pl-5 pr-5 py-8">
-        <div className="max-w-3xl space-y-4">
-          <p className="text-center text-2xl">
-            Select 3 Points to Create a Video
+        <div className="max-w-3xl space-y-6">
+          <p className="text-center text-3xl font-bold">
+            เลือกจุดในตำแหน่งเดียวกันของทั้ง 3 ภาพ
           </p>
           <Canvas
             size={imageSize}
@@ -241,22 +253,22 @@ export default function App() {
           />
           <div
             hidden={!previewImageSrc}
-            className="w-full pt-4 text-center text-xs text-gray-600	"
+            className="w-full pt-4 text-center text-sm text-gray-700"
           >
-            Tip:
-            <br /> <b>on pc</b> - use arrow keys and enter to move around and
-            set points.
-            <br /> <b>on mobile</b> - swipe in the preview image above to set
-            points
+            <br /> <b>บนคอม</b> - ใช้ปุ่มลูกศรเพื่อเลื่อนและกด Enter
+            เพื่อกำหนดจุด
+            <br /> <b>บนมือถือ</b> - เลื่อนภาพตัวอย่างด้านบน และกด SET POINT
+            เพื่อกำหนดจุด
           </div>
 
-          <div className="w-full max-w-3xl pl-5 pr-5 pt-2">
+          <div className="w-full max-w-3xl pl-5 pr-5 pt-4">
             <Button
-              className="w-full"
+              className="w-full rounded-full py-6 font-medium text-lg transition-all hover:scale-105"
               onClick={() => run()}
               disabled={selectedArr.filter((elem) => elem.x != -1).length != 3}
+              style={{ backgroundColor: "#9A8B9C", color: "#FFFFFF" }}
             >
-              Generate Video
+              สร้างวิดีโอ
             </Button>
           </div>
         </div>

@@ -3,5 +3,5 @@ services:
   imagegen:
     restart: unless-stopped
     ports:
-      - 80:9999
+      - 9999:9999
     build: .

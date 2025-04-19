@@ -255,7 +255,7 @@ export default function App() {
             hidden={!previewImageSrc}
             className="w-full pt-4 text-center text-sm text-gray-700"
           >
-            <br /> <b>บนคอม</b> - ใช้ปุ่มลูกศรเพื่อเลื่อนและกด Enter
+            <br /> <b>บนคอม</b> - ใช้ปุ่มลูกศรเพื่อเลื่อน และกด Enter
             เพื่อกำหนดจุด
             <br /> <b>บนมือถือ</b> - เลื่อนภาพตัวอย่างด้านบน และกด SET POINT
             เพื่อกำหนดจุด

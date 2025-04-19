@@ -38,7 +38,7 @@ export default function Dropzone({ onFileChange }: Props) {
       <div>
         <p className="text-center text-base mt-4 mb-6 font-noto">
           สร้างวิดีโอที่ดุ๊กดิ๊กได้ง่ายๆ เพียงอัพโหลดภาพจากเลนส์ <br />
-          SiamDispo จากนั้นเลือกจุดต้างอิง และกดสร้างวิดีโอได้เลย
+          SiamDispo จากนั้นเลือกจุดอ้างอิง และกดสร้างวิดีโอได้เลย
         </p>
       </div>
 

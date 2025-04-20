@@ -113,7 +113,7 @@ export default function App() {
 
   const run = async () => {
     setLoadingResultUrl(true);
-    const img_points = selectedArr.map((point, index) => {
+    const img_points = selectedArr.map((point: Vec2, index: number) => {
       const zone = index;
       return {
         x: Math.round(
@@ -133,7 +133,7 @@ export default function App() {
       );
     }
     try {
-      const res = await fetch("http://localhost/api/video", {
+      const res = await fetch("https://siamdispo.com/api/video", {
         method: "POST",
         body: formData,
       });

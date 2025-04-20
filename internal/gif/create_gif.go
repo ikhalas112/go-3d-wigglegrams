@@ -117,10 +117,13 @@ func CreateVideo(imageInput *image.Image, points *[]util.Vec2) (string, error) {
 	fmt.Println("กำลังสร้างวิดีโอด้วย ffmpeg...")
 
 	cmd := exec.Command("ffmpeg",
-		"-y",
+		"-y", // overwrite output
 		"-framerate", "6",
 		"-i", fmt.Sprintf("%s/frame_%%03d.png", frameDir),
+		"-vf", "scale=iw:trunc(ih/2)*2", 
 		"-c:v", "libx264",
+		"-preset", "ultrafast",        
+		"-crf", "28",                   
 		"-pix_fmt", "yuv420p",
 		outputPath,
 	)
